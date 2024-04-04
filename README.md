@@ -5,6 +5,6 @@ This is a timer that can be added to an Edrys classroom. It can communicate with
 Use this URL to add the module to your class:
 
 ```
-    todo
+    https://jh-488.github.io/edrys_module_timer/index.html
 ```
 
