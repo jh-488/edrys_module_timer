@@ -3,13 +3,18 @@ const feedbackContainer = document.querySelector(".feedback");
 const feedbackMessage = document.getElementById("feedback_message");
 const startBtn = document.getElementById("start");
 const tryAgainBtn = document.getElementById("try_again_btn");
+const timerCircle = document.querySelector(".timer-circle");
+const circumference = parseFloat(getComputedStyle(timerCircle).getPropertyValue("stroke-dasharray"));
 
-let timerStart;
+
+let timerStart = 1;
 
 Edrys.onReady(() => {
   console.log("Module Timer is loaded!");
 
-  timerStart = Edrys.module.config.timer ? Edrys.module.config.timer : 5;
+  countdownElement.textContent = Edrys.module.config.timer ? `${Edrys.module.config.timer}:00` : "--:--";
+
+  //timerStart = Edrys.module.config.timer ? Edrys.module.config.timer : 5;
 });
 
 // Create a countdown timer
@@ -25,6 +30,20 @@ const updateCountdown = () => {
   seconds = seconds < 10 ? "0" + seconds : seconds;
 
   countdownElement.textContent = `${minutes}:${seconds}`;
+
+  // Calculate the percentage of time remaining
+  const percentage = (time / (timerStart * 60)) * 100;
+  const dashOffset = circumference * (1 - (percentage / 100));
+
+  // Update the stroke dash offset to animate the circle
+  timerCircle.style.strokeDashoffset = dashOffset;
+
+  // Change the color of the timer circle if remaining time is under 20%
+  if (percentage < 20) {
+    timerCircle.style.stroke = "#ea3943"; 
+  } else {
+    timerCircle.style.stroke = "#4ca2ff";
+  }
 
   if (time < 0) {
     clearInterval(timerInterval);
