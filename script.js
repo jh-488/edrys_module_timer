@@ -7,14 +7,14 @@ const timerCircle = document.querySelector(".timer-circle");
 const circumference = parseFloat(getComputedStyle(timerCircle).getPropertyValue("stroke-dasharray"));
 
 
-let timerStart = 1;
+let timerStart;
 
 Edrys.onReady(() => {
   console.log("Module Timer is loaded!");
 
   countdownElement.textContent = Edrys.module.config.timer ? `${Edrys.module.config.timer}:00` : "--:--";
 
-  //timerStart = Edrys.module.config.timer ? Edrys.module.config.timer : 5;
+  timerStart = Edrys.module.config.timer ? Edrys.module.config.timer : 5;
 });
 
 // Create a countdown timer
