@@ -68,13 +68,21 @@ const stopTimer = () => {
   startBtn.disabled = false;
 };
 
-// Handle the timer start
+// Handle the timer start/pause/continue events
 const startTimer = () => {
   startBtn.disabled = true;
   time = timerStart * 60;
   updateCountdown();
   timerInterval = setInterval(updateCountdown, 1000);
   Edrys.sendMessage("timer-started", "Timer started!");
+};
+
+const pauseTimer = () => {
+  clearInterval(timerInterval);
+};
+
+const continueTimer = () => {
+  timerInterval = setInterval(updateCountdown, 1000);
 };
 
 const tryAgain = () => {
@@ -110,5 +118,13 @@ Edrys.onMessage(({ from, subject, body, module }) => {
         ? `Congrats! Challenge solved in ${minutes} minutes and ${seconds} seconds!`
         : `Congrats! Challenge solved in ${seconds} seconds!`
     );
+  } else if (subject === "pause-timer") {
+    pauseTimer();
+  } else if (subject === "continue-timer") {
+    continueTimer();
   }
 }, (promiscuous = true));
+
+
+
+
